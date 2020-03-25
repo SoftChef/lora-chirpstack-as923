@@ -1,0 +1,85 @@
+version: "3.7"
+
+services:
+  chirpstack-network-server:
+    container_name: lora-network
+    image: chirpstack/chirpstack-network-server:3
+    restart: always
+    networks:
+      - mtrnet
+    volumes:
+      - ./configuration/chirpstack-network-server:/etc/chirpstack-network-server
+
+  chirpstack-application-server:
+    container_name: lora-application
+    image: chirpstack/chirpstack-application-server:3
+    restart: always
+    ports:
+      - 8080:8080
+    networks:
+      - mtrnet
+    volumes:
+      - ./configuration/chirpstack-application-server:/etc/chirpstack-application-server
+
+  chirpstack-gateway-bridge:
+    container_name: lora-gateway
+    image: chirpstack/chirpstack-gateway-bridge:3
+    restart: always
+    ports:
+      - 1700:1700/udp
+    networks:
+      - mtrnet
+    volumes:
+      - ./configuration/chirpstack-gateway-bridge:/etc/chirpstack-gateway-bridge
+
+  chirpstack-geolocation-server:
+    container_name: lora-geolocation
+    image: chirpstack/chirpstack-geolocation-server:3
+    restart: always
+    networks:
+      - mtrnet
+    volumes:
+      - ./configuration/chirpstack-geolocation-server:/etc/chirpstack-geolocation-server
+
+  postgresql:
+    container_name: postgresql
+    image: postgres:9.6-alpine
+    restart: always
+    networks:
+      - mtrnet
+    volumes:
+      - ./configuration/postgresql/initdb:/docker-entrypoint-initdb.d
+      - postgresqldata:/var/lib/postgresql/data
+
+  redis:
+    container_name: redis
+    image: redis:5-alpine
+    restart: always
+    networks:
+      - mtrnet
+    volumes:
+      - redisdata:/data
+
+  mosquitto:
+    container_name: mosquitto
+    image: eclipse-mosquitto
+    restart: always
+    ports:
+      - 1883:1883
+      - 9001:9001
+    networks:
+      - mtrnet
+    volumes:
+      - ./mosquitto.conf:/mosquitto/config/mosquitto.conf
+
+volumes:
+  postgresqldata:
+  redisdata:
+
+networks:
+  mtrnet: 
+    ipam:
+      driver: default
+      config:
+        - subnet: "172.19.0.0/16"
+    external: true
