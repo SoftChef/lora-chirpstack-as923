@@ -70,24 +70,24 @@ application/#
       "rssi": -121,
       "loRaSNR": -4.5,
       "location": {
-              "latitude": 0,
-                      "longitude": 0,
-                              "altitude": 0
-                                    }
-                                        }
-                                          ],
-                                            "txInfo": {
-                                                "frequency": 923200000,
-                                                    "dr": 2
-                                                      },
-                                                        "adr": true,
-                                                          "fCnt": 72,
-                                                            "fPort": 6,
-                                                              "data": "ATIBJAAAAAAAAAA=",
-                                                              "object": {
-                                                              "isLeak": false,
-                                                              "voltage": 3.6,
-                                                              "reportTime": 155555555
-                                                              }
-                                                              }
-                                                              ```
+        "latitude": 0,
+        "longitude": 0,
+        "altitude": 0
+       }
+      }
+   ],
+     "txInfo": {
+               "frequency": 923200000,
+               "dr": 2
+     },
+       "adr": true,
+       "fCnt": 72,
+       "fPort": 6,
+       "data": "ATIBJAAAAAAAAAA=",
+       "object": {
+        "isLeak": false,
+        "voltage": 3.6,
+        "reportTime": 155555555
+       }
+  }
+```
